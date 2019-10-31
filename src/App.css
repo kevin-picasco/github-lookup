@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-color: aliceblue;
+  margin-left: 20px;
+  padding-bottom: 20px;
+  width: 800px;
 }
 
 .App-link {
