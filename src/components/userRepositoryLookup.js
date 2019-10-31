@@ -83,11 +83,12 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
 
     return (
         <div>
-            <h1>GitHub Lookup</h1>
+            <h1>GitHub Repositories Lookup</h1>
             <form className={classes.container} onSubmit={handleSubmit} autoComplete="off">
                 <div>
                     <TextField
                         required
+                        autoFocus
                         id="github-username"
                         label="Username"
                         defaultValue={$username.value}
@@ -115,10 +116,10 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
                 <div className={classes.root}>
                     {
                         $isDescDirection.value === true
-                            ? <Button variant="contained" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(false); }}>
+                            ? <Button variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(false); }}>
                                 <Icon className="fa fa-sort-amount-down" /> &nbsp;&nbsp;Desc
                             </Button>
-                            : <Button variant="contained" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(true); }}>
+                            : <Button variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(true); }}>
                                 <Icon className="fa fa-sort-amount-down-alt" /> &nbsp;&nbsp;Asc
                             </Button>
                     }
