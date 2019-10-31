@@ -7,5 +7,16 @@
 }
 
 .App-link {
-  color: #09d3ac;
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.App-link:hover {
+  text-decoration: underline;
+}
+
+h3{
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 20px;
 }
