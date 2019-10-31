@@ -7,19 +7,25 @@ const defaultErrorMessage = 'User not found';
 function* getUserRepositories(action) {
     try {
         // Validation
-        if (!action || !action.filter || !action.filter.username || !action.filter.username || action.filter.username.length == 0) {
+        if (!action || !action.filter || !action.filter.username || !action.filter.username || action.filter.username.length === 0) {
             yield put(getUserRepositoriesFailed('Username is empty'));
             return;
         }
 
-        let url = `${Constant.GITHUB_API_URL}/users/${action.filter.username}/repos?`;
+        let url = `${Constant.GITHUB_API_URL}/users/${action.filter.username}/repos`;
+
+        let queryStrings = [];
 
         if (action.filter.sort && action.filter.sort.length > 0) {
-            url += `sort=${action.filter.sort}`;
+            queryStrings.push(`sort=${action.filter.sort}`);
         }
 
         if (action.filter.isDescDirection != null) {
-            url += `direction=${action.filter.isDescDirection ? Constant.GITHUB_API_SORT_DIRECTION_DESC : Constant.GITHUB_API_SORT_DIRECTION_ASC}`;
+            queryStrings.push(`direction=${action.filter.isDescDirection ? Constant.GITHUB_API_SORT_DIRECTION_DESC : Constant.GITHUB_API_SORT_DIRECTION_ASC}`);
+        }
+
+        if (queryStrings.length > 0) {
+            url += `?${queryStrings.join('&')}`;
         }
 
         const resJson = yield fetch(url)
