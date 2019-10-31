@@ -1,6 +1,26 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getUserRepositories } from '../state/actions/userRepositoryAction';
+import Moment from 'react-moment';
+
+const UserRepository = ({ userRepository }) => {
+    return (
+        <div>
+            {userRepository.name}
+            <br />
+            <Moment format="D MMM YYYY hh:mm A">{userRepository.created_at}</Moment>
+            <br />
+            <a
+                className="App-link"
+                href={userRepository.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {userRepository.html_url}
+            </a>
+        </div>
+    )
+}
 
 let UserRepositoryList = ({ filter, userRepositories, getUserRepositories }) => {
     useEffect(() => {
@@ -9,29 +29,17 @@ let UserRepositoryList = ({ filter, userRepositories, getUserRepositories }) => 
 
     return (
         <div>
-            <ul className="users-suggestions">
-                {userRepositories.isLoading === true
+            {
+                userRepositories.isLoading === true
                     ? 'Loading...'
                     : userRepositories.error
                         ? `${userRepositories.error}`
-                        : userRepositories.data.map(userRepository => (
-                            <li key={userRepository.id}>
-                                {userRepository.name}
-                                <br />
-                                {userRepository.created_at}
-                                <br />
-                                <a
-                                    className="App-link"
-                                    href={userRepository.html_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {userRepository.html_url}
-                                </a>
-                            </li>
-                        ))}
-            </ul>
-        </div>
+                        : userRepositories.data && userRepositories.data.length
+                            ? userRepositories.data.map(userRepository =>
+                                <UserRepository key={userRepository.id} userRepository={userRepository}></UserRepository>)
+                            : 'User has no repository'
+            }
+        </div >
     )
 }
 
