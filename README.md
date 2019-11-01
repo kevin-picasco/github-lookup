@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -37,32 +35,32 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Implemented Architecture
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+These are the implemented architectures in the project:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `State Management using React Hooks`
 
-### Code Splitting
+The code base of this project is kind of similar as the example found [here](https://itnext.io/essential-react-hooks-design-patterns-a04309cc0404) which teaches us about two of the most important function in React Hooks:
+- `useState()` to store and update states of a component, and
+- `useEffect()` to execute functions whenever the array in its second argument changes.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+This project is using `useLink` function from [valuelink](https://www.npmjs.com/package/valuelink) instead of the normal `useState()` for simplicity. The value of current state of any variables can be retrieved using `.value` and be set using `.set()` function.
 
-### Analyzing the Bundle Size
+### `State Management using Redux`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+This project is using [redux](https://redux.js.org) for state management among different components. And this whole redux thingy can be incorporated with React Hooks with the help of `useSelector()` and `useDispatch()`.
 
-### Making a Progressive Web App
+This [article](https://blog.jakoblind.no/react-redux-hooks) has a great explanation on how to use React Hooks instead of the usual redux `mapStateToProps`, `mapDispatchToProps`, and `connect()` methods to communicate with redux's store.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### `Side Effect Management using Redux-Saga`
 
-### Advanced Configuration
+This project is using [Redux-Saga](https://redux-saga.js.org) to handle side effect management. This middleware is most useful when there are API or other asynchronous calls being made with complex flows in which calls depend on the next. In addition, testing becomes simple without necessity to mock the asynchronous behavior.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The key feature in Redux-Saga is of course the "generator" function, denoted with an `*` which makes use of the `yield` keyword and `next()` function to pause and invoke a chunk of code subsequently.
 
-### Deployment
+### `Unit Test using Enzyme`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+This project is using [enzyme](https://airbnb.io/enzyme) for unit testing and this [article](https://medium.com/@lavitr01051977/jest-test-example-8a434db44e33) provides a thorough explanation on how to perform unit test on React application with Redux. From testing the redux actions, reducers, and even the React-Saga's generator functions.
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Another great article related to unit testing can be found [here](https://dev.to/theactualgivens/testing-react-hook-state-changes-2oga), where it teaches us on how to test and simulate the changing of "hooked" state in a component.
