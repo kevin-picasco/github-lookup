@@ -1,6 +1,9 @@
 import { GET_USER_REPOSITORIES, GET_USER_REPOSITORIES_SUCCESS, GET_USER_REPOSITORIES_FAILED } from '../actions/userRepositoryAction';
 
 export default (state = { isLoading: false, data: null, error: null }, action) => {
+    if (!action || !action.type)
+        return state;
+
     switch (action.type) {
         case GET_USER_REPOSITORIES:
             return { ...state, isLoading: true };
