@@ -1,14 +1,13 @@
+import format from 'string-format';
 import { put, takeEvery } from 'redux-saga/effects';
-import { GET_USER_REPOSITORIES, getUserRepositoriesSuccess, getUserRepositoriesFailed } from '../actions/userRepositoryAction';
 import * as Constant from '../../utils/constant';
+import * as Action from '../actions/userRepositoryAction';
 
-const defaultErrorMessage = 'User not found';
-
-function* getUserRepositories(action) {
+export function* getUserRepositories(action) {
     try {
         // Validation
         if (!action || !action.filter || !action.filter.username || !action.filter.username || action.filter.username.length === 0) {
-            yield put(getUserRepositoriesFailed('Username is empty'));
+            yield put(Action.getUserRepositoriesFailed(format(Constant.MESSAGE_EMPTY, 'Username')));
             return;
         }
 
@@ -32,18 +31,18 @@ function* getUserRepositories(action) {
             .then(res => res.json());
 
         if (Array.isArray(resJson)) {
-            yield put(getUserRepositoriesSuccess(resJson));
+            yield put(Action.getUserRepositoriesSuccess(resJson));
         } else if (resJson.message && resJson.message.length && resJson.message.length > 0) {
-            yield put(getUserRepositoriesFailed(resJson.message));
+            yield put(Action.getUserRepositoriesFailed(resJson.message));
         } else {
-            yield put(getUserRepositoriesFailed(defaultErrorMessage));
+            yield put(Action.getUserRepositoriesFailed(format(Constant.MESSAGE_NOT_FOUND, 'User')));
         }
     } catch (err) {
         // Hide actual err from end-user
-        yield put(getUserRepositoriesFailed(defaultErrorMessage));
+        yield put(Action.getUserRepositoriesFailed(format(Constant.MESSAGE_NOT_FOUND, 'User')));
     }
 }
 
 export function* watchGetUserRepositories() {
-    yield takeEvery(GET_USER_REPOSITORIES, getUserRepositories);
+    yield takeEvery(Action.GET_USER_REPOSITORIES, getUserRepositories);
 }
