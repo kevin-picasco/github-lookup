@@ -84,5 +84,17 @@ describe('userRepositorySaga', () => {
         expect(generator.next().done).toBeTruthy();
     });
 
-    // one more for user not found
+    it(`dispatch action "${Action.GET_USER_REPOSITORIES_FAILED}" when user not found in API`, () => {
+        const mockData = { message: format(Constant.MESSAGE_NOT_FOUND, 'User') };
+
+        const initialAction = { filter: { username: 'usercannotbefoundingithub' } };
+        const generator = Saga.getUserRepositories(initialAction);
+
+        generator.next();
+
+        expect(generator.next(mockData).value)
+            .toEqual(put(Action.getUserRepositoriesFailed(mockData.message)));
+
+        expect(generator.next().done).toBeTruthy();
+    });
 })
