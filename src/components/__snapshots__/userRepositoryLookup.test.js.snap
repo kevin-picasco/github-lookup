@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`userRepositoryLookup render <UserRepositoryLookup> correctly when loadOnInit is set to "true" 1`] = `ShallowWrapper {}`;
+
+exports[`userRepositoryLookup render <UserRepositoryLookup> correctly when loadOnInit prop is not specified 1`] = `ShallowWrapper {}`;
+
+exports[`userRepositoryLookup render result correctly when frm-repository-lookup-filter form is submitted 1`] = `ShallowWrapper {}`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`userRepositoryList render <UserRepositoryList> correctly when loading is in progress 1`] = `ShallowWrapper {}`;
+
+exports[`userRepositoryList render <UserRepositoryList> correctly when there is an error 1`] = `ShallowWrapper {}`;
+
+exports[`userRepositoryList render <UserRepositoryList> correctly when userRepositories are empty 1`] = `ShallowWrapper {}`;
+
+exports[`userRepositoryList render <UserRepositoryList> correctly when userRepositories have data 1`] = `ReactWrapper {}`;
