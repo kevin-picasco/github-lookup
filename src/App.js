@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { UserRepositoryLookup } from './components/userRepositoryLookup';
+import UserRepositoryLookup from './components/userRepositoryLookup';
 
 function App() {
   return (

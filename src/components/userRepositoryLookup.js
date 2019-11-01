@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLink } from 'valuelink';
-import UserRepositoryList from './userRepositoryList';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import UserRepositoryList from './userRepositoryList';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,16 +29,13 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 120
     },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    },
     sortButton: {
         margin: theme.spacing(2),
         width: 100
     }
 }));
 
-export const UserRepositoryLookup = ({ loadOnInit = false }) => {
+const UserRepositoryLookup = ({ loadOnInit = false }) => {
     const classes = useStyles();
 
     // TODO: Load from some source?
@@ -48,10 +45,10 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
     ];
 
     const $loadOnInit = useLink(loadOnInit);
-    const $filter = useLink({ username: '', sort: null, isDescDirection: false });
-    const $username = useLink('');
-    const $sort = useLink(sortableFields[0].value);
-    const $isDescDirection = useLink(false);
+    const $filter = useLink({ username: '', sort: sortableFields[0].value, isDescDirection: false });
+    const $username = useLink($filter.value.username);
+    const $sort = useLink($filter.value.sort);
+    const $isDescDirection = useLink($filter.value.isDescDirection);
 
     const syncFilter = () => {
         if ($loadOnInit.value !== true) {
@@ -66,7 +63,9 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
     };
 
     const handleSubmit = event => {
-        event.preventDefault();
+        if (event && event.preventDefault) {
+            event.preventDefault();
+        }
 
         syncFilter();
     }
@@ -84,7 +83,7 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
     return (
         <div>
             <h1>GitHub Repositories Lookup</h1>
-            <form className={classes.container} onSubmit={handleSubmit} autoComplete="off">
+            <form id="frm-repository-lookup-filter" className={classes.container} onSubmit={handleSubmit} autoComplete="off">
                 <div>
                     <TextField
                         required
@@ -116,16 +115,16 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
                 <div className={classes.root}>
                     {
                         $isDescDirection.value === true
-                            ? <Button variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(false); }}>
+                            ? <Button id="github-sort-direction-desc" variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(false); }}>
                                 <Icon className="fa fa-sort-amount-down" /> &nbsp;&nbsp;Desc
                             </Button>
-                            : <Button variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(true); }}>
+                            : <Button id="github-sort-direction-asc" variant="outlined" color="default" className={classes.sortButton} onClick={() => { $isDescDirection.set(true); }}>
                                 <Icon className="fa fa-sort-amount-down-alt" /> &nbsp;&nbsp;Asc
                             </Button>
                     }
                 </div>
                 <div style={{ width: '100%', textAlign: 'left', marginTop: '10px' }}>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button id="btn-search" type="submit" variant="contained" color="primary">
                         Search
                     </Button>
                 </div>
@@ -138,3 +137,5 @@ export const UserRepositoryLookup = ({ loadOnInit = false }) => {
         </div >
     );
 }
+
+export default UserRepositoryLookup;
